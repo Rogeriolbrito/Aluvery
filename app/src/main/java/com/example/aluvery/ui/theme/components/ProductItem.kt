@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alura.aluvery.extensions.toBrazilianCurrency
 import br.com.alura.aluvery.model.Product
+import coil.compose.AsyncImage
 import com.example.aluvery.R
 import com.example.aluvery.ui.theme.Purple500
 import com.example.aluvery.ui.theme.Teal200
@@ -59,16 +60,16 @@ fun ProductItem(product: Product) {
                     .fillMaxWidth()
             ) {
                 val imageSize = 100.dp
-                Image(
-                    painter = painterResource(
-                        id = product.image
-                    ), contentDescription = null,
+                AsyncImage(
+                    model = product.image,
+                    contentDescription = null,
                     Modifier
                         .size(imageSize)
                         .offset(y = imageSize / 2)
                         .clip(shape = CircleShape)
                         .align(Alignment.BottomCenter),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.ic_launcher_background)
                 )
             }
 
@@ -94,5 +95,11 @@ fun ProductItem(product: Product) {
 @Preview(showBackground = true, showSystemUi = true, widthDp = 1000)
 @Composable
 fun ProductItemPreview() {
-    ProductItem(product = Product("Hamburguer", BigDecimal(9.99), R.drawable.ic_launcher_background))
+    ProductItem(
+        product = Product(
+            "Hamburguer",
+            BigDecimal(9.99),
+            R.drawable.ic_launcher_background
+        )
+    )
 }
